@@ -3,10 +3,19 @@ const mongoose = require ('mongoose')
 const dotenv = require('dotenv').config()
 const cors = require('cors')
 const app = express()
+const PORT= 5000
 
 // connect db
 
-mongoose.connect(process.env.MONGO_URL,()=>console.log('Mongose has been sucessfully loaded'))
+const db = require('./connection/connection')
 
 //connect server
 app.listen(process.env.PORT,()=>console.log('server has been started sucessfully'))
+
+
+db.once('open', () => {
+  app.listen(PORT, () => {
+ 
+    console.log(`connect to  http://localhost:${PORT}`);
+  });
+});
